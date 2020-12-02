@@ -1,0 +1,12 @@
+<odoo>
+    <data>
+        <record id="optimiser_action_window" model="ir.actions.act_window">
+            <field name="name">Optimiser</field>
+            <field name="res_model">optimiser.optimiser</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem id="optimiser_menu_item" name="Optimiser" parent="website.menu_website_configuration"
+                  action="optimiser.optimiser_action_window" sequence="200" groups="group_optimiser"/>
+    </data>
+</odoo>

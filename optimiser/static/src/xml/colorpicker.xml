@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="colorpicker_template" xml:space="preserve">
+    <t t-name="OptimiserColorPicker">
+        <div t-att-class="'oe_form_field '+widget.widget_class" t-att-style="widget.attrs.style">
+            <t t-if="widget.mode !== 'readonly'">
+                <input type="text"
+                       t-att-id="widget.attrs.id"
+                       t-att-name="widget.attrs.name"
+                       t-att-value="widget.attrs.value"
+                       t-att-tabindex="widget.attrs.tabindex"
+                       t-att-autofocus="widget.attrs.autofocus"
+                       t-att-placeholder="widget.attrs.placeholder"
+                       t-att-maxlength="widget.field.size"
+                       class="jscolor"
+                />
+            </t>
+        </div>
+    </t>
+</templates>

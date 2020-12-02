@@ -1,0 +1,116 @@
+<odoo>
+    <data>
+        <record id="optimiser_form_view" model="ir.ui.view">
+            <field name="name">optimiser_form_view</field>
+            <field name="model">optimiser.optimiser</field>
+            <field name="arch" type="xml">
+                <form string="Optimiser">
+                    <notebook>
+                        <page string="Main">
+                            <group>
+                                <p class="alert alert-info" role="alert">
+                                    If you want to enable lazy loading of images but not load some of them
+                                    lazy, just add this CSS class to that HTML tags <code>og_not_lazy</code> and they will not load lazy.
+                                </p>
+                            </group>
+                            <group>
+                                <group>
+                                    <field name="website_id"/>
+                                    <field name="enable_lazy_load_front"/>
+                                    <field name="show_default_image_loading_image"
+                                           attrs="{'invisible':[('enable_lazy_load_front','=',False)]}"/>
+                                    <field name="loading_image" widget="image" style="width: 60px; height: 80px;"
+                                           attrs="{'invisible':[('enable_lazy_load_front','=',False)]}"/>
+                                    <field name="compress_html"/>
+                                    <field name="js_bottom"/>
+                                    <field name="load_js_async"/>
+                                    <field name="css_bottom"/>
+                                    <field name="load_css_async"/>
+                                </group>
+                            </group>
+                            <group>
+                                <field name="custom_content_ids" widget="one2many_list">
+                                    <tree string="Contents" editable="bottom">
+                                        <field name="position"/>
+                                        <field name="content"/>
+                                    </tree>
+                                </field>
+                            </group>
+                        </page>
+                        <page string="Page Loading">
+                            <group>
+                                <group>
+                                    <field name="page_loading"/>
+                                    <field name="page_loading_bg_color" widget="op_colorpicker"
+                                           attrs="{'invisible':[('page_loading','=',False)]}"/>
+                                    <field name="page_loading_bg_transparency"
+                                           attrs="{'invisible':[('page_loading','=',False)]}"/>
+                                    <field name="show_page_loading_until" widget="radio"
+                                           attrs="{'invisible':[('page_loading','=',False)]}"/>
+                                </group>
+                                <group>
+                                    <field name="show_default_page_loading_image"
+                                           attrs="{'invisible':[('page_loading','=',False)]}"/>
+                                    <field name="page_loading_image" widget="image" style="width: 60px; height: 80px;"
+                                           attrs="{'invisible':[('page_loading','=',False)]}"/>
+                                    <field name="page_loading_image_width"
+                                           attrs="{'invisible':[('page_loading','=',False)]}"/>
+                                    <field name="page_loading_image_height"
+                                           attrs="{'invisible':[('page_loading','=',False)]}"/>
+                                    <field name="page_loading_image_pos_top"
+                                           attrs="{'invisible':[('page_loading','=',False)]}"/>
+                                    <field name="page_loading_image_pos_left"
+                                           attrs="{'invisible':[('page_loading','=',False)]}"/>
+                                </group>
+                            </group>
+                        </page>
+                        <page string="ReCaptcha">
+                            <group>
+                                <p class="alert alert-warning mb0" role="alert">
+                                    ReCaptcha is available only for login and registration forms!!!
+                                </p>
+                            </group>
+                            <group>
+                                <group>
+                                    <field name="enable_recaptcha"/>
+                                    <field name="captcha_site_key"/>
+                                    <field name="captcha_secret_key"/>
+                                    <field name="captcha_selectors" widget="many2many_tags"/>
+                                </group>
+                            </group>
+                            <group>
+                                <p class="alert alert-info" role="alert">
+                                    <strong>
+                                        Captcha Selectors
+                                    </strong>
+                                    field must contain the css-selectors of your <strong>forms</strong> in which you
+                                    want to add the Google reCaptcha.
+                                    <br/>
+                                    For example, if you want to add recaptcha to the login form, simply add the class of
+                                    your form as follows <code>.oe_login_form</code>.
+                                    This is the default odoo login form class, but you may have changed it, so add your
+                                    own.
+                                </p>
+                            </group>
+                        </page>
+                    </notebook>
+                </form>
+            </field>
+        </record>
+
+        <record id="optimiser_tree_view" model="ir.ui.view">
+            <field name="name">optimiser_tree_view</field>
+            <field name="model">optimiser.optimiser</field>
+            <field name="arch" type="xml">
+                <tree string="Optimiser">
+                    <field name="website_id"/>
+                    <field name="enable_lazy_load_front"/>
+                    <field name="compress_html"/>
+                    <field name="js_bottom"/>
+                    <field name="css_bottom"/>
+                    <field name="page_loading"/>
+                </tree>
+            </field>
+        </record>
+    </data>
+</odoo>

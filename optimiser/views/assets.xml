@@ -1,0 +1,10 @@
+<odoo>
+    <data>
+        <template id="optimiser.assets" inherit_id="web.assets_frontend" name="Optimiser Asstes">
+            <xpath expr="." position="inside">
+                <script src="/optimiser/static/src/js/libs/lazyload.min.js"/>
+                <script src="/optimiser/static/src/js/script.js"/>
+            </xpath>
+        </template>
+    </data>
+</odoo>

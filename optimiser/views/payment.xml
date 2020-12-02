@@ -1,0 +1,20 @@
+<odoo>
+    <data>
+        <template id="optimiser.payment_process_page" inherit_id="payment.payment_process_page">
+            <xpath expr="//script" position="replace">
+                <script>
+                    var timer = setInterval(function(){
+                    if(odoo.define){
+                        odoo.define('payment.processing_bootstrap', function(require) {
+                            var PaymentProcessing = require('payment.processing');
+                            var processingWidget = new PaymentProcessing(null,<t t-esc="payment_tx_ids"/>);
+                            processingWidget.attachTo($('.o_payment_processing'));
+                        });
+                        clearInterval(timer);
+                    }
+                    }, 100);
+                </script>
+            </xpath>
+        </template>
+    </data>
+</odoo>

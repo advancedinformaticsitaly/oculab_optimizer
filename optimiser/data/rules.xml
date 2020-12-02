@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <record id="group_optimiser" model="res.groups">
+            <field name="name">Optimiser</field>
+            <field name="category_id" ref="base.module_category_extra"/>
+            <field name="users" eval="[(4, ref('base.user_root')), (4, ref('base.user_admin'))]"/>
+            <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+        </record>
+        <record id="optimiser.access_optimiser" model="ir.model.access">
+            <field name="name">access_optimiser</field>
+            <field name="model_id" ref="optimiser.model_optimiser_optimiser"/>
+            <field name="group_id" ref="optimiser.group_optimiser"/>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="True"/>
+            <field name="perm_create" eval="True"/>
+            <field name="perm_unlink" eval="True"/>
+        </record>
+        <record id="optimiser.access_optimiser_custom_content" model="ir.model.access">
+            <field name="name">access_optimiser_custom_content</field>
+            <field name="model_id" ref="optimiser.model_optimiser_custom_content"/>
+            <field name="group_id" ref="optimiser.group_optimiser"/>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="True"/>
+            <field name="perm_create" eval="True"/>
+            <field name="perm_unlink" eval="True"/>
+        </record>
+        <record id="optimiser.access_optimiser_selectors" model="ir.model.access">
+            <field name="name">access_optimiser_selectors</field>
+            <field name="model_id" ref="optimiser.model_optimiser_selectors"/>
+            <field name="group_id" ref="optimiser.group_optimiser"/>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="True"/>
+            <field name="perm_create" eval="True"/>
+            <field name="perm_unlink" eval="True"/>
+        </record>
+    </data>
+</odoo>

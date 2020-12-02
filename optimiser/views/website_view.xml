@@ -1,0 +1,19 @@
+<odoo>
+    <data>
+        <record id="view_website_optimiser_form" model="ir.ui.view">
+            <field name="model">website</field>
+            <field name="inherit_id" ref="website.view_website_form"/>
+            <field name="mode">primary</field>
+            <field name="arch" type="xml">
+                <group name="other">
+                    <field name="optimiser_id">
+                        <tree string="Optimise">
+                            <field name="enable_lazy_load_front"/>
+                            <field name="compress_html"/>
+                        </tree>
+                    </field>
+                </group>
+            </field>
+        </record>
+    </data>
+</odoo>
