@@ -88,9 +88,59 @@ class IrUiView(models.Model):
 
 					if optimiser.load_js_async:
 						scripts = res.cssselect('script[src]')
+						lazy_scripts = res.cssselect('script[data-src]')
+						optimiser_js_async_setting = optimiser.load_js_async
+
+						if "shop/payment" in request.httprequest.path:
+							optimiser_js_async_setting = 'async'
 
 						for script in scripts:
-							script.attrib['defer'] = 'defer'
+							if optimiser_js_async_setting == 'async':
+								script.attrib['defer'] = 'defer'
+							else:
+								script.attrib['data-optimiser-src'] = script.attrib['src']
+								script.attrib.pop("src", None)
+
+						for script in lazy_scripts:
+							if optimiser_js_async_setting == 'async':
+								script.attrib['defer'] = 'defer'
+								script.attrib['src'] = script.attrib['data-src']
+							else:
+								script.attrib['data-optimiser-src'] = script.attrib['data-src']
+
+							script.attrib.pop("data-src", None)
+
+						if optimiser_js_async_setting == 'sync_lazy':
+							load_lazy_scripts = Element("script")
+							load_lazy_scripts.text = """function loadScripts() {
+							    var scripts = Array.from(document.querySelectorAll("script[data-optimiser-src]"));
+								sessionStorage.setItem('secondTimeLoad', '1');
+							    function loadScript(scripts) {
+							        if(scripts.length){
+							            var attr = scripts[0].getAttribute("data-optimiser-src");
+							            scripts[0].setAttribute("src", attr);
+							            scripts[0].removeAttribute("data-optimiser-src");
+							            scripts[0].onload = function () {
+							                scripts.shift();
+							                loadScript(scripts);
+							            }
+							        }
+							    }
+
+							    loadScript(scripts)
+							}
+
+							window.addEventListener("scroll", function scrollEventFunction() {
+								setTimeout(function(){loadScripts()},500)
+							},{once: true})
+
+							window.addEventListener("load", function () {
+								var timer = sessionStorage.getItem('secondTimeLoad') ? 0 : 1500;
+							    setTimeout(function () {
+							        loadScripts()
+							    }, timer);
+							})"""
+							body.insert(len(body), load_lazy_scripts)
 
 					if optimiser.page_loading:
 						page_loader_script_tag = Element("script")
@@ -155,6 +205,15 @@ class IrUiView(models.Model):
 										position += 1
 								else:
 									html.insert(position, tmp)
+
+				if optimiser.preload_fonts and len(optimiser.preload_fonts_ids) > 0:
+					for font in optimiser.preload_fonts_ids:
+						preload_font_elem = Element('link')
+						preload_font_elem.attrib['rel'] = "preload"
+						preload_font_elem.attrib['href'] = font.path
+						preload_font_elem.attrib['as'] = "font"
+						preload_font_elem.attrib['crossorigin'] = ""
+						head.insert(1, preload_font_elem)
 
 				if optimiser.enable_lazy_load_front:
 					images = res.cssselect('img:not(.og_not_lazy)')

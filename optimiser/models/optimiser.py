@@ -58,10 +58,17 @@ class Optimiser(models.Model):
 	show_default_page_loading_image = fields.Boolean(string = 'Show Default image',
 	                                                 help = 'Show default page loading image if page loading option was enabled.',
 	                                                 default = True)
-	load_js_async = fields.Boolean(string = "Load JS Async", help = "Load js scripts asynchronous.", default = False)
+	load_js_async = fields.Selection([
+			('async', 'Load JS Asynchronous'),
+			('sync_lazy', 'Load JS Synchronous Lazy')],
+			string = "Load JS Async",
+			help = "Load js scripts asynchronous or synchronous with javascript.", default = "")
 	load_css_async = fields.Boolean(string = "Load CSS Async", help = "Load styles asynchronous using javascript.",
 	                                default = False)
 	custom_content_ids = fields.One2many('optimiser.custom.content', 'optimiser_id', 'Contents')
+
+	preload_fonts = fields.Boolean(string = 'Preload Fonts', help = 'Enable Fonts Preload', default = False)
+	preload_fonts_ids = fields.One2many('optimiser.fonts.preload', 'optimiser_id', 'Preload Fonts Paths')
 
 	enable_recaptcha = fields.Boolean(string = 'Enable ReCaptcha')
 	captcha_site_key = fields.Char(string = 'Site Key', help = 'You can find this in google recaptcha site.')
@@ -112,3 +119,11 @@ class OptimiserCustomContent(models.Model):
         ('body_end', 'End of Body'),
     ], string='Position', default = "body_end", help = "The position where the content will be added.")
 	content = fields.Text(string = "Content", help = "The content that will be added at the position you set.")
+
+
+class OptimiserFontsPreload(models.Model):
+	_name = 'optimiser.fonts.preload'
+	_description = 'Optimiser Fonts Preload'
+
+	optimiser_id = fields.Many2one('optimiser.optimiser', 'Optimiser', ondelete = 'cascade', required = True)
+	path = fields.Char(string = "Path", help = "The path of the font you wish to preload.")

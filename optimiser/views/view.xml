@@ -29,6 +29,15 @@
                                 </group>
                             </group>
                             <group>
+                                <field name="preload_fonts"/>
+                                <field name="preload_fonts_ids" widget="one2many_list"
+                                       attrs="{'invisible':[('preload_fonts','=',False)]}">
+                                    <tree string="Preload Fonts" editable="bottom">
+                                        <field name="path"/>
+                                    </tree>
+                                </field>
+                            </group>
+                            <group>
                                 <field name="custom_content_ids" widget="one2many_list">
                                     <tree string="Contents" editable="bottom">
                                         <field name="position"/>

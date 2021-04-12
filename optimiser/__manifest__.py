@@ -23,7 +23,7 @@
 	'author'               : "OdooGuys Pvt. Ltd.",
 	'website'              : "http://odooguys.com/",
 	'category'             : 'optimise',
-	'version'              : '12.0.3.2.9',
+	'version'              : '12.0.4.0.2',
 	'license'              : 'OPL-1',
 	'depends'              : ['base', 'web', 'website', 'auth_signup'],
 	"qweb"                 : [
